@@ -1,0 +1,1047 @@
+\documentclass[11pt]{article}
+
+\usepackage{tikz}
+\usepackage{mathpartir}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{subcaption}
+
+\usepackage{colortbl}
+\usetikzlibrary{arrows}
+
+\newcommand{\myrule} [3] []{
+    \begin{center}
+        \begin{tikzpicture}
+            \draw[#2-#3, thick, #1] (0,0) to (\linewidth,0);
+        \end{tikzpicture}
+    \end{center}
+}
+
+\graphicspath{{./graphics/}}%helpful if your graphic files are in another directory
+%%
+%% \BibTeX command to typeset BibTeX logo in the docs
+\AtBeginDocument{%
+  \providecommand\BibTeX{{%
+    Bib\TeX}}}
+
+
+%%
+%% end of the preamble, start of the body of the document source.
+\begin{document}
+
+%%
+%% The "title" command has an optional parameter,
+%% allowing the author to define a "short title" to be used in page headers.
+\title{Supplementary Material for MnL with Reactive Blocks}
+
+%%
+%% This command processes the author and affiliation and title
+%% information and builds the first part of the formatted document.
+\maketitle
+
+\section{Introduction}
+
+Block relation:
+- Parent
+- Child
+
+Block state:
+- Close (for all input had connected with child block)
+- Partial (there is exist input had not connected with child block)
+
+
+\section{Typing Rules}
+\begin{figure}[h]
+	\myrule{left to reversed}{right to reversed}
+	\begin{tabular}[t]{l r}
+		\textbf{Typing} & \framebox{$\Gamma \vdash b : BT$} \\
+		                &                                   \\
+		\framebox{\infer []
+			{}
+			{\Gamma \vdash incomplete : ST \otimes *}
+		}               & (\textsc{BT-IncDynanic})          \\
+		                &                                   \\
+		\framebox{\infer []
+			{}
+			{\Gamma \vdash incomplete : ST \otimes T}
+		}               & (\textsc{BT-IncStatic})           \\
+	\end{tabular}
+\end{figure}
+
+
+\begin{figure}[h]
+	\myrule{left to reversed}{right to reversed}
+	\begin{tabular}[t]{l | l}
+		\begin{tabular}[t]{l l r}
+			\textbf{Syntax} &                                                                     &               \\
+			\; $t$ ::=      &                                                                     & $Terms:$      \\
+			                & \; $con$                                                            & $contant$     \\
+			                & $| \; pat$                                                          & $pattern$     \\
+			                & $| \; dec$                                                          & $declaration$ \\
+			                & $| \; exp$                                                          & $expression$  \\
+			                & $| \; param$                                                        & $parameter$   \\
+			                & $| \; uid$                                                          & $identifier$  \\
+			                & $| \; mtc$                                                          & $match$       \\
+			                & $| \; field $                                                       & $field$       \\
+			\; $con$ ::=    &                                                                     & $Constants:$  \\
+			                & \; \textbf{string} $v$                                              & $string$      \\
+			                & $|$ \textbf{character} $v$                                          & $character$   \\
+			                & $|$ \textbf{boolean} $v$                                            & $boolean$     \\
+			                & $|$ \textbf{number} $v$                                             & $number$      \\
+			                & $|$ \textbf{unit} $v$                                               & $unit$        \\
+			\; $v$ ::=      &                                                                     & $Values:$     \\
+			                & $x$                                                                 & $identifier$  \\
+			                & $|$ t $\to$ t                                                       & $function$    \\
+			                & $| \; () $                                                          & $unit$        \\
+			                & $| \; \ldots \; | \; -1 \; | \;  0 \;  |  \; 1  \; | \; \ldots$     & $number$      \\
+			                & $| \; \textbf{true} \; | \; \textbf{false} $                        & $boolean$     \\
+			                & $| \;  'a'  \; | \ldots $                                           & $character$   \\
+			                & $| \; "abc"  \; | \dots $                                           & $string$      \\
+			\; $pat$ ::=    &                                                                     & $Patterns:$   \\
+			                & $|$ \textbf{string} $v$                                             & $string$      \\
+			                & $|$ \textbf{character} $v$                                          & $character$   \\
+			                & $|$ \textbf{boolean} $v$                                            & $boolean$     \\
+			                & $|$ \textbf{number} $v$                                             & $number$      \\
+			                & $|$ \textbf{unit} $v$                                               & $unit$        \\
+			                & $|$ \textbf{any}                                                    & $wildcard$    \\
+			                &                                                                     &               \\
+			\multicolumn{3}{l}{\textbf{Syntax Metamorphosis}}                                                     \\
+			\multicolumn{3}{r}{\framebox{$term \to block$}}                                                       \\
+			$b$ ::=         &                                                                     & $Blocks:$     \\
+			                & \multicolumn{2}{l}{$con  \; |  \; pat  \; |  \; dec \; | \; exp $ }                 \\
+			                & \multicolumn{2}{l}{$|  \; param  \; |  \; uid  \; |  \; mtc $}                      \\
+			                & \multicolumn{2}{l}{$|  \; field $}                                                  \\
+			                &                                                                                     \\
+		\end{tabular}
+		 &
+		\begin{tabular}[t]{l}
+			\begin{tabular}[t]{l r}
+				\multicolumn{2}{l}{\textbf{Syntax Metamorphosis}} \\
+				\multicolumn{2}{r}{\framebox{$term \to block$}}   \\
+				$con$ ::= & $Constants:$                          \\
+				          & $string$                              \\                                                               \\
+				$pat$ ::= & $Patterns:$                           \\
+				          & $string$                              \\
+			\end{tabular} \\
+		\end{tabular}
+	\end{tabular}
+	\myrule{serif cm}{serif cm}
+	\begin{tabularx}{\textwidth}{ >{\raggedright\arraybackslash}X >{\raggedleft\arraybackslash}X}
+		\textbf{Typing} & \framebox{$\Gamma \vdash b : BT$} \\
+	\end{tabularx}
+	\begin{tabularx}{\textwidth}{ >{\raggedleft\arraybackslash}X | >{\raggedleft\arraybackslash}X}
+		\begin{tabular}[t]{l r}
+			\framebox{
+				\infer []
+				{}
+				{\Gamma \vdash \blacklozenge \: v: Exp \otimes T}}
+			 & (BT-CONST)
+		\end{tabular}
+		 &
+		\begin{tabular}[t]{l r}
+			\framebox{\infer []
+				{}
+				{\Gamma \vdash \blacklozenge \: v: Pat \otimes T}}
+			 & (BT-PAT)
+		\end{tabular}
+	\end{tabularx}
+	\myrule{right to reversed}{left to reversed}
+	\caption{Constants, Values, and Patterns}
+\end{figure}
+
+\begin{figure}[h]
+	\myrule{left to reversed}{right to reversed}
+	\begin{tabular}[t]{l | l}
+		\begin{tabular}[t]{l l r}
+			\textbf{Syntax} &                                           &                             \\
+			\; $PT ::=$     &                                           & $Primitive \; types:$       \\
+
+			                & \textbf{number} $|$ \textbf{string}       &                             \\
+			                & $|$ \textbf{character}  $|$ \textbf{unit} &                             \\
+			                & $|$ \textbf{boolean}                      &                             \\
+			\; $T ::=$      & \ldots                                    & $Types$:                    \\
+			                & $PT$                                      & $primitive \; type:$        \\
+			                & $|$ \textbf{nothing}                      & $nothing$                   \\
+			                & $|$ \textbf{*}                            & $any$                       \\
+			                & $|$ $T \to T$                             & $function$                  \\
+			                & $|$ $PT \implies T$                       & $match-do$                  \\
+			                & $|$ $(T)$                                 & $parentheses$               \\
+			\; $ST ::=$     &                                           & $Syntax \; types:$          \\
+			                & $|$ \textbf{Dec}                          & $declaration$               \\
+			                & $|$ \textbf{Exp}                          & $expression$                \\
+			                & $|$ \textbf{Pat}                          & $pattern$                   \\
+			                & $|$ \textbf{Uid}                          & $identifier$                \\
+			                & $|$ \textbf{Param}                        & $parameter$                 \\
+			                & $|$ \textbf{Field}                        & $field$                     \\
+			                & $|$ \textbf{Mtc}                          & $match-do$                  \\
+			\; $BT ::=$     &                                           & $Block \; types:$           \\
+			                & $ST \otimes T$                            & $ST \; and \; T$            \\
+			\; $\Gamma ::=$ &                                           & $Contexts:$                 \\
+			                & $\varnothing$                             & $empty \; context$          \\
+			                & $\Gamma, b:BT$                            & $block \; binding$          \\
+			\; $prog ::=$   & \textbf{MNL} $dec$                        & $Program$                   \\
+			                &                                           &                             \\
+			\multicolumn{3}{l}{\textbf{Syntax Metamorphosis}}                                         \\
+			                &                                           & \framebox{$prog \to block$} \\
+			\; $prog ::=$   &                                           & $Program$                   \\
+		\end{tabular}
+		 &
+		\begin{tabular}[t]{r l r}
+			\multicolumn{3}{l}{\textbf{Syntax Metamorphosis}}                                                             \\
+			                               &                                                  & \framebox{$T \to color$}  \\
+			\multicolumn{2}{l}{\;$T ::=$}  & $Types:$                                                                     \\
+			                               & \cellcolor [HTML]{778899}\#778899                & $any$                     \\
+			$|$                            & \cellcolor [HTML]{f08080}\#f08080                & $boolean$                 \\
+			$|$                            & \cellcolor [HTML]{808000}\#808000                & $character$               \\
+			$|$                            & \cellcolor [HTML]{FED049}\#FED049                & $number$                  \\
+			$|$                            & \cellcolor [HTML]{228B22}\#228B22                & $string$                  \\
+			$|$                            & \cellcolor [HTML]{800000}\color{white}{\#800000} & $unit$                    \\
+			$|$                            & \cellcolor [HTML]{008B8B}\#008B8B                & $nothing$                 \\
+			$|$                            & \cellcolor [HTML]{4363D8}\color{white}{\#4363D8} & $function$                \\
+			$|$                            & \cellcolor [HTML]{9A6324}\color{white}{\#9A6324} & $match-do$                \\
+			                               &                                                                              \\
+			                               &                                                  & \framebox{$ST \to shape$} \\
+			\multicolumn{2}{l}{\;$ST ::=$} & $Syntax \; types:$                                                           \\
+			                               &                                                  & $declaration$             \\
+		\end{tabular}
+	\end{tabular}
+	\myrule{right to reversed}{left to reversed}
+	\caption{Type}
+\end{figure}
+
+
+\begin{figure}[h]
+	\myrule{left to reversed}{right to reversed}
+	\begin{tabular}[t]{l | l}
+		\begin{tabular}[t]{l l r}
+			\textbf{Syntax}      &                                                                      &                             \\
+			\; $uid$ ::=         &                                                                      & $Identifier :$              \\
+			                     & \multicolumn{2}{l}{$[$\textbf{ID}$]^1 \; letter [letter | digit]^*$}                               \\
+			\; $param ::=$       &                                                                      & $Parameter :$               \\
+			                     & \textbf{ID} $uid$                                                    & $variable$                  \\
+			                     & $|$ \textbf{Unit}                                                    & $unit$                      \\
+			\; $dec ::=$         &                                                                      & $Declaration :$             \\
+			                     & \textbf{Function } $uid$                                             & $function$                  \\
+			                     & \;\textbf{Parameter } $param$                                        &                             \\
+			                     & \; \textbf{Expression } $exp$                                        &                             \\
+			                     & $|$ \textbf{Variable } $uid$                                         & $variable$                  \\
+			                     & \; \textbf{bind to } $exp$                                           &                             \\
+			                     & $| \; dec \; dec$                                                    & $dec \; sequence$           \\
+			                     &                                                                      &                             \\
+			\multicolumn{3}{l}{\textbf{Syntax Metamorphosis}}                                                                         \\
+			                     &                                                                      & \framebox{$term \to block$} \\
+			$uid$            ::= &                                                                      & $Identifier:$               \\
+			                     &                                                                      &                             \\
+			$param$ ::=          &                                                                      & Parameter:                  \\
+			                     &                                                                      & $unit$                      \\
+			                     &                                                                      & $variable$                  \\
+		\end{tabular}
+		 &
+		\begin{tabular}[t]{l r}
+			\multicolumn{2}{l}{\textbf{Syntax Metamorphosis}} \\
+			          & \framebox{$term \to block$}           \\
+			$dec$ ::= & $Declaration:$                        \\
+			          & $function$                            \\
+		\end{tabular}
+	\end{tabular}
+	\myrule{serif cm}{serif cm}
+	\begin{tabular}[t]{l r}
+		\textbf{Evaluation}                                                                                & \framebox{$b \to b'$} \\
+		\infer []
+		{b_2 \to b_2'}
+		{\textbf{Variable } b_1 \textbf{ bind to } b_2 \to \textbf{Variable } b_1 \textbf{ bind to } b_2'} & (\textsc{E-DecBind})  \\
+		                                                                                                   &                       \\
+		\infer []
+		{}
+		{\textbf{Variable } b_1 \textbf{ bind to } v_2 \to [b_1 \mapsto v_2]}                              & (\textsc{E-DecV})     \\
+	\end{tabular}
+	\myrule{serif cm}{serif cm}
+\end{figure}
+
+\begin{figure}[h]
+	\myrule{serif cm}{serif cm}
+	\begin{tabular}[t]{l r}
+		\textbf{Typing} & \framebox{$\Gamma \vdash b : BT$} \\
+		                &                                   \\
+		\framebox{\infer []
+			{}
+			{\Gamma \vdash \textbf{ID } n : Uid \otimes T  }
+		}               & (\textsc{BT-Id})                  \\
+		                &                                   \\
+		\framebox{\infer []
+			{}
+			{\textbf{Unit}: Param \otimes unit \in \Gamma }
+		}               & (\textsc{BT-ParamEmpty})          \\
+		                &                                   \\
+		\framebox{\infer []
+			{\Gamma \vdash  b_1 : Uid \otimes nothing}
+			{\textbf{ID } b_1 : Param \otimes T  \in \Gamma } }
+		                & (\textsc{BT-Param})               \\
+		                &                                   \\
+		\framebox{\infer []
+		{\Gamma \vdash  b_1 : Uid \otimes nothing           \\ \Gamma , b_2 : Param \otimes T_1 \vdash b_3 : Exp \otimes T_2 }
+			{\Gamma \vdash \textbf{Function } b_1 \textbf{ Parameter } b_2 .\textbf{ Expression } b_3 : Dec \otimes T_1 \to T_2}}
+		                & (\textsc{BT-DecFunc})             \\
+		                &                                   \\
+		\framebox{\infer[]
+		{\Gamma \vdash  b_1 : Uid \otimes nothing           \\ \Gamma \vdash b_2 : Exp \otimes T }
+			{\Gamma \vdash \textbf{Variable } b_1 \textbf{ bind to } b_2 : Dec \otimes T}}
+		                & (\textsc{BT-DecVar})              \\
+	\end{tabular}
+	\myrule{right to reversed}{left to reversed}
+	\caption{Identifier, Parameter, and Declaration}
+\end{figure}
+
+
+\begin{figure}[h]
+	\myrule{left to reversed}{right to reversed}
+	\begin{tabular}[t]{l | l}
+		\begin{tabular}[t]{l l r}
+			\textbf{Syntax} &                                             &                             \\
+			\; $exp$ ::=    & \ldots                                      & $Expressions:$              \\
+			                & $| \; con$                                  & $constant$                  \\
+			                & $|$ \textbf{Lambda}                         & $lambda$                    \\
+			                & \; \textbf{Parameter} $param$               &                             \\
+			                & \; \textbf{Expression } $exp$               &                             \\
+			                & $|$ \textbf{Application } $exp_1$           & $function$                  \\
+			                & \; \textbf{ Over } $exp_2$                  & $application$               \\
+			                & $|$ \textbf{Bound } $uid$                   & $bound$                     \\
+			                & $|$ \textbf{Condition}                      & $condition$                 \\
+			                & \; \textbf{When } $exp$                     &                             \\
+			                & \; \textbf{Is true }$exp_1$                 &                             \\
+			                & \; \textbf{Otherwise } $exp_2$              &                             \\
+			                & $|$ \textbf{Sequence}                       & $sequence$                  \\
+			                & \; \textbf{Item-1} $exp_1$;                 &                             \\
+			                & \; $[$\textbf{Item-}n $exp_n]^+$            & $n \geqslant 2 $            \\
+			                & $|$ \textbf{Let} $dec$                      & $let \; binding $           \\
+			                & \; \textbf{in }                             & $n \geqslant 1 $            \\
+			                & \; $[$\textbf{Item-}n $exp_n]^+$            &                             \\
+			                & $|$ $exp_1$ \textbf{$\diamondsuit$} $exp_2$ & binary operator             \\
+			                & $|$ \textbf{$\diamondsuit$} $exp_1$         & unary operator              \\
+			                & $|$ \textbf{Switch} $exp$                   & $case \; analysis$          \\
+			                & \; \textbf{Case-1} $mtc_1$;                 &                             \\
+			                & \; $[$\textbf{Case-}n $mtc_n]^+$            & $n \geqslant 2$             \\
+			\; $mtc$ ::=    & \textbf{is } $pat$ \textbf{ do } $exp$      & $Matching:$                 \\
+			                &                                             &                             \\
+			\multicolumn{3}{l}{\textbf{Syntax Metamorphosis}}                                           \\
+			                &                                             & \framebox{$term \to block$} \\
+
+			\; $exp$ ::=    & \ldots                                      & $Expression$                \\
+			                & $| \; con $                                 & $constant$                  \\
+			                &                                             & $lambda$                    \\
+		\end{tabular}
+		 &
+		\begin{tabular}[t]{l}
+			\begin{tabular}[t]{l r}
+				\multicolumn{2}{l}{\textbf{Syntax Metamorphosis}} \\
+				                  & \framebox{$term \to block$}   \\
+				$exp$ ::=  \ldots & $Expressions:$                \\
+				                  & $condition$                   \\
+				                  &                               \\
+				                  & $binary \; operator$          \\
+			\end{tabular} \\
+		\end{tabular}
+	\end{tabular}
+	\myrule{serif cm}{serif cm}
+	\caption{Expression - Syntax}
+\end{figure}
+
+\begin{figure}[h]
+	\myrule{serif cm}{serif cm}
+	\begin{tabular}[t]{l r}
+		\textbf{Evaluation} & \framebox{$b \to b'$}                                   \\
+		                    &                                                         \\
+		\infer []
+		{b_1 \to b_1'}
+		{\textbf{Application of } b_1 \textbf{ Over } b_2                             \\\\ \to \textbf{Application of } b_1' \textbf{ Over } b_2}
+		                    & (\textsc{E-App1})                                       \\
+		                    &                                                         \\
+		\infer []
+		{b_2 \to b_2'}
+		{\textbf{Application of } v_1 \textbf{ Over } b_2                             \\\\ \to \textbf{Application of } v_1 \textbf{ Over } b_2'}
+		                    & (\textsc{E-App2})                                       \\
+		                    &                                                         \\
+		\infer []
+		{}
+		{\textbf{Application of } \lambda x:BT_{11}.b_{12} \textbf{ Over } v_2        \\\\ \to [x \mapsto v_2]b_{12}}
+		                    & (\textsc{E-AppAbs})                                     \\
+		                    &                                                         \\
+		\infer []
+		{}
+		{\textbf{Condition When } true \textbf{ Is true } b_2 \textbf{ Otherwise } b_3 \to b_2}
+		                    & (\textsc{E-Cond-True})                                  \\
+		                    &                                                         \\
+		\infer []
+		{}
+		{\textbf{Condition When } false \textbf{ Is true } b_2 \textbf{ Otherwise } b_3 \to b_3}
+		                    & (\textsc{E-Cond-False})                                 \\
+		                    &                                                         \\
+		\infer []
+		{b_1 \to b_1'}
+		{\textbf{Condition When } b_1 \textbf{ Is true } b_2 \textbf{ Otherwise } b_3 \\\\
+			\to \textbf{Condition When } b_1' \textbf{ Is true } b_2 \textbf{ Otherwise } b_3 }
+		                    & (\textsc{E-Condition})                                  \\
+		                    &                                                         \\
+		\infer []
+		{b_1 \to b_1'}
+		{\textbf{Sequence of } \textbf{Exp-1 } b_1 \; \textbf{ Exp-2 } b_2            \\\\
+			\to \textbf{Sequence of } \textbf{Exp-1 } b_1' \; \textbf{ Exp-2 } b_2}
+		                    & (\textsc{E-Seq})                                        \\
+		                    &                                                         \\
+		                    &                                                         \\
+		\infer []
+		{b_2 \to b_2'}
+		{\textbf{Sequence of } \textbf{Exp-1 } unit \; \textbf{ Exp-2 } b_2           \\\\
+			\to \textbf{Sequence of } \textbf{Exp-1 } unit \; \textbf{ Exp-2 } b_2'}
+		                    & (\textsc{E-SeqNext})                                    \\
+		                    &                                                         \\
+		\infer []
+		{}
+		{\textbf{Let } b_1 = v_2 \textbf{ in } b_3 \to [b_1 \mapsto v_2]b_3}
+		                    & (\textsc{E-letV})                                       \\
+		                    &                                                         \\
+		\infer []
+		{b \to b'}
+		{\textbf{Switch } b \left\{\textbf{Case-i }bc_i ^{i \in 1 \ldots n}\right\}   \\\\
+		\to \textbf{Switch } b' \left\{\textbf{Case-i }bc_i ^{i \in 1 \ldots n}\right\} }
+		                    & (\textsc{E-CaseAnalysis})                               \\
+		                    &                                                         \\
+		\infer []
+		{b \Downarrow v                                                               \\ b1_i \Downarrow v1_i \\ v = v1_i}
+		{\textbf{Switch } b \left\{\textbf{Case-i }\textbf{is } b1_i \textbf{ do } b2_i ^{i \in 1 \ldots n}\right\} \to b2_i}
+		                    & (\textsc{E-CaseProj})                                   \\
+		                    &                                                         \\
+		\infer []
+		{b_2 \to b_2'}
+		{\textbf{is } b_1 \textbf{ do } b_2 \to \textbf{is } b_1 \textbf{ do } b_2' }
+		                    & (\textsc{E-Match})                                      \\
+	\end{tabular}
+	\myrule{serif cm}{serif cm}
+\end{figure}
+\begin{figure}[h]
+	\myrule{serif cm}{serif cm}
+	\begin{tabular}[t]{l r}
+		\textbf{Evaluation} & \framebox{$b \to b'$}  \\
+		                    &                        \\
+		\infer []
+		{b_1 \to b_1'}
+		{\textbf{Terminal } b_1 \textbf{ operator } b_2 \to \textbf{Terminal } b_1' \textbf{ operator } b_2 }
+		                    & (\textsc{E-BinOptr-1}) \\
+		                    &                        \\
+		\infer []
+		{b_2 \to b_2'}
+		{\textbf{Terminal } v \textbf{ operator } b_2 \to \textbf{Terminal } v \textbf{ operator } b_2' }
+		                    & (\textsc{E-BinOptr-2}) \\
+		                    &                        \\
+		\infer []
+		{b \to b'}
+		{\textbf{Terminal } b \to \textbf{Terminal } b' }
+		                    & (\textsc{E-UnaryOptr}) \\
+	\end{tabular}
+	\myrule{serif cm}{serif cm}
+\end{figure}
+
+\begin{figure}[h]
+	\myrule{serif cm}{serif cm}
+	\begin{tabular}[t]{l r}
+		\textbf{Typing} & \framebox{$\Gamma \vdash b : BT$} \\
+		                &                                   \\
+		\framebox{
+			\infer[]
+		{\Gamma \vdash b_1 : Exp \otimes T_1 \to T_2        \\ \Gamma \vdash b_2 : Exp \otimes T_1}
+			{\Gamma \vdash \textbf{Application of } b_1 \textbf{ Over } b_2 : Exp \otimes T_2}
+		}               & (\textsc{BT-App})                 \\
+		                &                                   \\
+		\framebox{
+			\infer[]
+		{\Gamma \vdash b_1 : Uid \otimes nothing            \\ b : Param \otimes T  \in \Gamma }
+			{\Gamma \vdash \textbf{Bound } b_1 : Exp \otimes T}
+		}               & (\textsc{BT-BoundParam})          \\
+		                &                                   \\
+		\framebox{
+			\infer[]
+		{\Gamma \vdash b_1 : Uid \otimes nothing            \\ b : Dec \otimes T \in \Gamma }
+			{\Gamma \vdash \textbf{Bound } b_1 : Exp \otimes T}
+		}               & (\textsc{BT-BoundDec})            \\
+		                &                                   \\
+		\framebox{
+			\infer[]
+			{\Gamma , b_1 : Param \otimes T_1 \vdash b_2 : Exp \otimes T_2}
+			{\Gamma \vdash \textbf{Lambda Parameter } b_1 \textbf{ Expression } b_2 : Exp \otimes T_1 \to T_2}
+		}               & (\textsc{BT-Lambda})              \\
+		                &                                   \\
+		\framebox{
+			\infer[]
+		{\Gamma \vdash b_1 : Exp \otimes boolean            \\ \Gamma \vdash b_2 : Exp \otimes T \\ \Gamma \vdash b_3 : Exp \otimes T}
+			{\Gamma \vdash \textbf{Condition When } b_1 \textbf{ Is true } b_2 \textbf{ Otherwise } b_3 : Exp \otimes T}
+		}               & (\textsc{BT-Condition})           \\
+		                &                                   \\
+		\framebox{\infer[]
+		{\Gamma \vdash  b_1 : Exp \otimes unit              \\ \Gamma \vdash b_2 : Exp \otimes T_2}
+			{\Gamma \vdash \textbf{Sequence of } \textbf{Exp-1 } b_1 \; \textbf{ Exp-2 } b_2 : Exp \otimes T_2}}
+		                & (\textsc{BT-Seq})                 \\
+		                &                                   \\
+		\framebox{\infer[]
+			{\Gamma, b_{dec} \vdash b : Exp \otimes T}
+			{\Gamma \vdash \textbf{Let } b_{dec} \textbf{ in Exp } b : Exp \otimes T}
+		}               & (\textsc{BT-LetIn})               \\
+		                &                                   \\
+		\framebox{\infer[]
+		{\textnormal{for each i}                            \\ \Gamma \vdash b : Exp \otimes T_1 \\ \Gamma \vdash bc_i : Mtc \otimes T_1 \implies T_2}
+		{\Gamma \vdash \textbf{Switch } b \left\{\textbf{Case-i } bc_i \; ^{i \in 1 \ldots n} \right\}: Exp \otimes T_2}
+		}               & (\textsc{BT-CaseAnalysis})        \\
+		                &                                   \\
+		\framebox{\infer[]
+			{\Gamma , b_1 : Pat \otimes T_1 \vdash b_2 : Exp \otimes  T_2}
+			{\Gamma \vdash \textbf{is } b_1 \textbf{ do } b_2 : Mtc \otimes T_1 \implies T_2}
+		}               & (\textsc{BT-Match})               \\
+	\end{tabular}
+	\myrule{serif cm}{serif cm}
+	\caption{Expression - Evaluation and Typing}
+\end{figure}
+\begin{figure}[h]
+	\myrule{serif cm}{serif cm}
+	\begin{tabular}[t]{l r}
+		\textbf{Typing} & \framebox{$\Gamma \vdash b : BT$} \\
+		                &                                   \\
+		\framebox{\infer[]
+		{\Gamma \vdash b_1 : Exp \otimes  T_1               \\ \Gamma \vdash b_2 : Exp \otimes  T_1}
+			{\Gamma \vdash \textbf{Terminal } b_1 \textbf{ operator } b_2 : Exp \otimes T_2 }
+		}               & (\textsc{BT-BinOptr})             \\
+		                &                                   \\
+		\framebox{\infer[]
+			{\Gamma \vdash b : Exp \otimes T_1}
+			{\Gamma \vdash \textbf{Terminal } b : Exp \otimes T_2}
+		}               & (\textsc{BT-UnaryOptr})           \\
+	\end{tabular}
+	\myrule{right to reversed}{left to reversed}
+	\caption{Expression - Evaluation and Typing}
+\end{figure}
+
+
+\begin{figure}[h]
+	\myrule{left to reversed}{right to reversed}
+	\begin{tabular}[t]{l | l}
+		\begin{tabular}[t]{l l r}
+			\textbf{Syntax}                                                       &                &                  \\
+			\multicolumn{2}{l}{\; $exp$ ::= \ldots}                               & $Expressions:$                    \\
+			\; \; $|$ \textbf{Tuple constructor}                                  &                & $constructor$    \\
+			\; \; \; $[$\textbf{Inhabitant-}i $exp_i]^+$                          &                & $i \geqslant 1$  \\
+			\; \; $|$ \textbf{Get Item-}$n$                                       &                & $tuple$          \\
+			\; \; \; \textbf{from Tuple } $exp$                                   &                & $projection$     \\
+			\multicolumn{2}{l}{\; $v$ ::= \ldots}                                 & $Values:$                         \\
+			\; \; $|$ $tuple \left\{v_i \; ^{i \in 1..n}\right\}$                 &                & $tuple \; value$ \\
+			\multicolumn{2}{l}{\; $T$ ::=  \ldots}                                & $Types:$                          \\
+			\; \; $|$  \textbf{tuple of (}$T_1 [$ \textbf{and} $T_n]^*$\textbf{)} &                & $tuple$          \\
+		\end{tabular}
+		 &
+		\begin{tabular}[t]{r l r}
+			\multicolumn{3}{l}{\textbf{Syntax Metamorphosis}}                                                                         \\
+			                                         &                                                  & \framebox{$T \to color$}    \\
+			\multicolumn{2}{l}{\; $T$ ::=  $\ldots$} & $Types:$                                                                       \\
+			$|$                                      & \cellcolor [HTML]{911eb4}\color{white}{\#911eb4} & $tuple$                     \\
+			                                         &                                                  & \framebox{$term \to block$} \\
+			\; $exp$ ::=                             & \ldots                                           & $Expressions:$              \\
+			                                         &                                                  & $constructor$               \\
+		\end{tabular}
+	\end{tabular}
+	\myrule{serif cm}{serif cm}
+	\begin{tabular}[t]{l r}
+		\textbf{Evaluation} & \framebox{$b \to b'$}                                \\
+		                    &                                                      \\
+		\infer []
+		{}
+		{ tuple \left\{v_i \; ^{i \in 1..n}\right\}.j \to  v_j}
+		                    & (\textsc{E-TupleProjX})                              \\
+		                    &                                                      \\
+		\infer []
+		{b \to b'}
+		{\textbf{Get Item-}n \textbf{ from Tuple } b \to \textbf{Get Item-}n \textbf{ from Tuple } b'
+		}
+		                    & (\textsc{E-TupleProj})                               \\
+		                    &                                                      \\
+		\infer []
+		{b_j \to b_j'}
+		{ tuple \left\{v_i \; ^{i \in 1..j-1}, b_j, b_k \; ^{k \in j+1..n}\right\} \\\\ \to tuple \left\{v_i \; ^{i \in 1..j-1}, b_j', b_k \; ^{k \in j+1..n}\right\}}
+		                    & (\textsc{E-Tuple})
+	\end{tabular}
+	\myrule{serif cm}{serif cm}
+	\begin{tabular}[t]{l r}
+		\textbf{Typing} & \framebox{$\Gamma \vdash b : BT$} \\
+		\framebox{\infer[]
+		{\textnormal{for each i}                            \\ \Gamma \vdash  b_i: Exp \otimes T_i}
+		{\Gamma \vdash \textbf{Tuple constructor }          \\\\ \left\{\textbf{Inhabitant-i } b_i \; ^{i \in 1 \ldots n}\right\} : Exp \otimes \textbf{tuple of } \left\{T_i \; ^{i \in 1 \ldots n}\right\}}
+		}               & (\textsc{BT-Tuple})               \\
+		                &                                   \\
+		\framebox{\infer[]
+		{\Gamma \vdash b : Exp \otimes \textbf{tuple of } \left\{T_i \; ^{i \in 1 \ldots m}\right\} }
+		{\Gamma \vdash \textbf{Get Item- } n \textbf{ from Tuple } b : Exp \otimes T_n }
+		}               & (\textsc{BT-TupleProj})           \\
+	\end{tabular}
+	\myrule{right to reversed}{left to reversed}
+	\caption{Tuple - Syntax and Type}
+\end{figure}
+
+
+\begin{figure}[h]
+	\myrule{left to reversed}{right to reversed}
+	\begin{tabular}[t]{l | l}
+		\begin{tabular}[t]{l l r}
+			\textbf{Syntax}                                                                                   &                 &                   \\
+			\multicolumn{2}{l}{\; $exp$ ::= \ldots}                                                           & $Expressions:$                      \\
+			\; \; $|$ \textbf{Record constructor}                                                             &                 & $constructor$     \\
+			\; \; \; $[$\textbf{Field-}i $field_i]^+$                                                         &                 & $i \geqslant 1$   \\
+			\; \; $|$ \textbf{Get field-}$n$                                                                  &                 & $record$          \\
+			\; \; \; \textbf{from Record } $exp$                                                              &                 & $projection$      \\
+			\multicolumn{2}{l}{\; $field$ ::=}                                                                & $Field:$                            \\
+			\; \; \textbf{Field} $uid$ \textbf{ = } $exp$                                                     &                                     \\
+			\multicolumn{2}{l}{\; $v$ ::= \ldots}                                                             & $Values:$                           \\
+			\; \; $|$  $record \left\{ l_i = v_i \; ^{i \in 1..n} \right\}$                                   &                 & $record \; value$ \\
+			\multicolumn{2}{l}{\; $T$ ::=  \ldots}                                                            & $Types:$                            \\
+			\multicolumn{2}{l}{\; \;  $|$ \textbf{record of } }                                               & $record$                            \\
+			\multicolumn{2}{l}{\; \; \; \textbf{\{} $l_1 : T_1  [$ \textbf{and} $ l_n : T_n]^* $ \textbf{\}}} & $n \geqslant 2$                     \\
+		\end{tabular}
+		 &
+		\begin{tabular}[t]{r l r}
+			\multicolumn{3}{l}{\textbf{Syntax Metamorphosis}}                                                                         \\
+			                                         &                                                  & \framebox{$T \to color$}    \\
+			\multicolumn{2}{l}{\; $T$ ::=  $\ldots$} & $Types:$                                                                       \\
+			$|$                                      & \cellcolor [HTML]{FF8C00}\color{white}{\#FF8C00} & $record$                    \\
+			                                         &                                                  & \framebox{$term \to block$} \\
+			\; $exp$ ::=                             & \ldots                                           & $Expressions:$              \\
+			                                         &                                                  & $constructor$               \\
+		\end{tabular}
+	\end{tabular}
+	\myrule{serif cm}{serif cm}
+	\begin{tabular}[t]{l r}
+		\textbf{Evaluation} & \framebox{$b \to b'$}                                             \\
+		                    &                                                                   \\
+		\infer []
+		{}
+		{ record \left\{l_i=v_i \; ^{i \in 1..n}\right\}.l_j \to  v_j}
+		                    & (\textsc{E-RecordProjX})                                          \\
+		                    &                                                                   \\
+		\infer []
+		{b \to b'}
+		{\textbf{Get field-}n \textbf{ from Record } b                                          \\\\ \to \textbf{Get field-}n \textbf{ from Record } b'
+		}
+		                    & (\textsc{E-RecordProj})                                           \\
+		                    &                                                                   \\
+		\infer []
+		{b_j \to b_j'}
+		{ record \left\{l_i=v_i \; ^{i \in 1..j-1}, l_j=b_j, l_k=b_k \; ^{k \in j+1..n}\right\} \\\\ \to record \left\{l_i=v_i \; ^{i \in 1..j-1}, l_j=b_j', l_k=b_k \; ^{k \in j+1..n}\right\}}
+		                    & (\textsc{E-Record})
+	\end{tabular}
+	\myrule{serif cm}{serif cm}
+	\begin{tabular}[t]{l r}
+		\textbf{Typing} & \framebox{$\Gamma \vdash b : BT$} \\
+		\framebox{\infer[]
+		{\Gamma \vdash n : Uid \otimes nothing              \\ \Gamma \vdash b : Exp \otimes T}
+			{\Gamma \vdash \textbf{Field } n \textbf{ = } b : Field \otimes n:T }
+		}               & (\textsc{BT-Field})               \\
+		                &                                   \\
+		\framebox{\infer[]
+		{\textnormal{for each i}                            \\ \Gamma \vdash  b_i: Field \otimes T_i}
+		{\Gamma \vdash \textbf{Record constructor }         \\\\ \left\{\textbf{Field-i } b_i \; ^{i \in 1 \ldots n}\right\} : Exp \otimes \textbf{record of } \left\{T_i \; ^{i \in 1 \ldots n}\right\}}
+		}               & (\textsc{BT-Record})              \\
+		                &                                   \\
+
+		\framebox{\infer[]
+		{\Gamma \vdash b : Exp \otimes \textbf{record of } \left\{T_i \; ^{i \in 1 \ldots m}\right\} }
+		{\Gamma \vdash \textbf{Get field- } n \textbf{ from Record } b : Exp \otimes T_n }
+		}               & (\textsc{BT-RecordProj})          \\
+	\end{tabular}
+	\myrule{right to reversed}{left to reversed}
+	\caption{Record - Syntax and Type}
+\end{figure}
+
+% Starting List 
+\begin{figure}[h]
+	\myrule{left to reversed}{right to reversed}
+	\begin{tabular}[t]{l | l}
+		\begin{tabular}[t]{l l r}
+			\textbf{Syntax} &                                        &                             \\
+			\; $exp$ ::=    & \ldots                                 & $Expression:$               \\
+			                & $|$ \textbf{List constructor}          &                             \\
+			                & \; \textbf{Empty list}                 & $empyt \; list$             \\
+			                & $|$ \textbf{List constructor}          & $constructor$               \\
+			                & \; $[$\textbf{Inhabintat-}n $exp_n]^*$ & $n \geqslant 1$             \\
+			                & $|$ \textbf{Is empty } $exp$           & $test \; for$               \\
+			                &                                        & $empty \; list$             \\
+			                & $|$ \textbf{Head of List } $exp$       & $head \; of \; a \; list$   \\
+			                & $|$ \textbf{Tail of List } $exp$       & $tail \; of \; a \; list$   \\
+			                & $|$ \textbf{Append } $exp_1$           & $append \; a \; new $       \\
+			                & \; \textbf{to List } $exp_2$           & $inhabitant$                \\
+			\; $v$ ::=      & \ldots                                 & $Values:$                   \\
+			                & $|$  $list []$                         & $empy \; list$              \\
+			                & $|$  $list [v_1, v_2]$                 & $list \; constructor$       \\
+			\; $T$ ::=      & \ldots                                 & $Types:$                    \\
+			                & $|$ \textbf{list of} $T$               & $list$                      \\
+			                &                                        &                             \\
+			\multicolumn{3}{l}{\textbf{Syntax Metamorphosis}}                                      \\
+			                &                                        & \framebox{$term \to block$} \\
+			\; $exp$ ::=    & \ldots                                 & $Expressions:$              \\
+			                &                                        & $constructor$               \\
+		\end{tabular}
+		 &
+		\begin{tabular}[t]{r l r}
+			\multicolumn{3}{l}{\textbf{Syntax Metamorphosis}}                                                                         \\
+			                                         &                                                  & \framebox{$T \to color$}    \\
+			\multicolumn{2}{l}{\; $T$ ::=  $\ldots$} & $Types:$                                                                       \\
+			$|$                                      & \cellcolor [HTML]{000075}\color{white}{\#000075} & $list$                      \\
+			                                         &                                                  & \framebox{$term \to block$} \\
+			\; $exp$ ::=                             & \ldots                                           & $Expressions:$              \\
+			                                         &                                                  & $empty$                     \\
+		\end{tabular}
+	\end{tabular}
+	\myrule{serif cm}{serif cm}
+	\caption{List}
+\end{figure}
+
+
+\begin{figure}
+	\myrule{serif cm}{serif cm}
+	\begin{tabular}[t]{l r}
+		\textbf{Evaluation rules} & \framebox{$b \to b'$}         \\
+		                          &                               \\
+		\infer []
+		{b_1 \to b_1'}
+		{\textbf{Append } b_1 \textbf{ to List } b_2 \to \textbf{Append } b_1' \textbf{ to List } b_2
+		}
+		                          & (\textsc{E-ListAppend1})      \\
+		                          &                               \\
+		\infer []
+		{b_2 \to b_2'}
+		{\textbf{Append } b_1 \textbf{ to List } b_2 \to \textbf{Append } b_1 \textbf{ to List } b_2'
+		}
+		                          & (\textsc{E-ListAppend2})      \\
+		                          &                               \\
+		\infer []
+		{}
+		{\textbf{Is empty } list[] \to  true}
+		                          & (\textsc{E-ListIsEmptyEmpty}) \\
+		                          &                               \\
+		\infer []
+		{}
+		{\textbf{Is empty } list[v_1, v_2] \to  false}
+		                          & (\textsc{E-ListIsEmptyList})  \\
+		                          &                               \\
+		\infer []
+		{b_1 \to b_1'}
+		{\textbf{Is emtpy } b_1 \to \textbf{Is empty } b_1'
+		}
+		                          & (\textsc{E-ListIsEmpty})      \\
+		                          &                               \\
+		\infer []
+		{}
+		{\textbf{Head of List } list[v_1, v_2] \to  v_1}
+		                          & (\textsc{E-HeadOfListCons})   \\
+		                          &                               \\
+		\infer []
+		{b_1 \to b_1'}
+		{\textbf{Head of List } b_1 \to \textbf{Head of List } b_1'
+		}
+		                          & (\textsc{E-HeadOfList})       \\
+		                          &                               \\
+		\infer []
+		{}
+		{\textbf{Tail of List } list[v_1, v_2] \to  v_2}
+		                          & (\textsc{E-TailOfListCons})   \\
+		                          &                               \\
+		\infer []
+		{b_1 \to b_1'}
+		{\textbf{Tail of List } b_1 \to \textbf{Tail of List } b_1'
+		}
+		                          & (\textsc{E-TailOfList})       \\
+	\end{tabular}
+	\myrule{serif cm}{serif cm}
+	\caption{List}
+\end{figure}
+
+\begin{figure}
+	\myrule{serif cm}{serif cm}
+	\begin{tabular}[t]{l r}
+		\textbf{Typing rules} & \framebox{$\Gamma \vdash b : BT$} \\
+		\framebox{
+			\infer []
+			{}
+			{\Gamma \vdash \textbf{List constructor Empty list } : Exp \otimes \textit{list of *}}
+		}
+		                      & (\textsc{BT-ListEmpty})           \\
+		                      &                                   \\
+		\framebox{\infer[]
+		{\textnormal{for each i}                                  \\ \Gamma \vdash  b_i: Exp \otimes T}
+		{\Gamma \vdash \textbf{List constructor }                 \\\\ \left\{\textbf{Inhabitant-i } b_i \; ^{i \in 1 \ldots n}\right\}: Exp \otimes \textit{list of T}}
+		}                     & (\textsc{BT-ListCons})            \\
+		                      &                                   \\
+		\framebox{\infer[]
+			{\Gamma \vdash b : Exp \otimes list \; of \; T}
+			{\Gamma \vdash \textbf{Is empty } b : Exp \otimes boolean }
+		}                     & (\textsc{BT-ListIsEmpty})         \\
+		                      &                                   \\
+		\framebox{\infer[]
+			{\Gamma \vdash b : Exp \otimes list \; of \; T}
+			{\Gamma \vdash \textbf{Head of List } b : Exp \otimes T }
+		}                     & (\textsc{BT-ListHead})            \\
+		                      &                                   \\
+		\framebox{\infer[]
+			{\Gamma \vdash b : Exp \otimes list \; of \; T}
+			{\Gamma \vdash \textbf{Tail of List } b : Exp \otimes list \; of \; T }
+		}                     & (\textsc{BT-ListTail})            \\
+		                      &                                   \\
+		\framebox{\infer[]
+		{\Gamma \vdash b_1 : Exp \otimes T                        \\ \Gamma \vdash b_2 : Exp \otimes list \; of \; T}
+			{\Gamma \vdash \textbf{Append } b_1 \textbf{ to List } b_2 : Exp \otimes list \; of \; T }
+		}                     & (\textsc{BT-ListAppend})          \\
+		                      &                                   \\
+	\end{tabular}
+	\myrule{right to reversed}{left to reversed}
+	\caption{List}
+\end{figure}
+
+
+% Starting List 
+\begin{figure}[h]
+	\myrule{left to reversed}{right to reversed}
+	\begin{tabular}[t]{l | l}
+		\begin{tabular}[t]{l l r}
+			\textbf{Syntax} &                            &                                \\
+			\; $term$ ::=   & \ldots                     & $Terms:$                       \\
+			                & $|$ $\lambda X.t$          & $type \; abstraction$          \\
+			                & $|$ $t \; [T]$             & $type \; application$          \\
+			\; $v$ ::=      & \ldots                     & $Values:$                      \\
+			                & $|$ $X$                    & $type \; abstraction \; value$ \\
+			\; $T$ ::=      & \ldots                     & $Types:$                       \\
+			                & $|$ $'X$                   & $type \; variable$             \\
+			                & $|$ $\forall X.T$          & $universal$                    \\
+			\; $\Gamma$ ::= & \ldots                     & $Contexts:$                    \\
+			                & $|$ $\Gamma, ST \otimes X$ & $type \; variable \; binding$
+		\end{tabular}
+		 &
+		\begin{tabular}[t]{r l r}
+			\multicolumn{3}{l}{\textbf{Syntax Metamorphosis}}                                                                      \\
+			                                         &                                                  & \framebox{$T \to color$} \\
+			\multicolumn{2}{l}{\; $T$ ::=  $\ldots$} & $Types:$                                                                    \\
+			$|$                                      & \cellcolor [HTML]{2F4F4F}\color{white}{\#2F4F4F} & $type \ variable$
+		\end{tabular}
+	\end{tabular}
+	\myrule{serif cm}{serif cm}
+	\begin{tabular}[t]{l  r}
+		\textbf{Evaluation rules} & \framebox{$b \to b'$} \\
+		                          &                       \\
+		\infer []
+		{}
+		{(\lambda X.b)[T_2] \to [X \mapsto T_2]b}
+		                          & (\textsc{E-TAbs})     \\
+		                          &                       \\
+		\infer []
+		{b_1 \to b_1'}
+		{b_1[BT_2] \to b_1' [BT_2]}
+		                          & (\textsc{E-TApp})     \\
+	\end{tabular}
+	\myrule{serif cm}{serif cm}
+	\begin{tabular}[t]{l r}
+		\textbf{Typing rules} & \framebox{$\Gamma \vdash b : BT$} \\
+		                      &                                   \\
+		\framebox{
+			\infer []
+			{\Gamma , X \vdash b : BT}
+			{\Gamma \vdash \lambda X.b : \forall X.BT}
+		}
+		                      & (\textsc{BT-Tabs})                \\
+		                      &                                   \\
+		\framebox{
+		\infer []
+		{\Gamma \vdash b:\forall X.BT_1}
+		{\Gamma \vdash b \; [ST_2 \otimes T_2] : [X \mapsto T_2] BT_1}
+		}
+		                      & (\textsc{BT-Tapp})                \\
+	\end{tabular}
+	\myrule{right to reversed}{left to reversed}
+	\caption{Polymorhpic}
+\end{figure}
+
+%% Start Constraint typing rule
+\begin{figure}
+	\myrule{left to reversed}{right to reversed}
+	\begin{tabular}[t]{l r}
+		\textbf{Constraint typing rules} & \framebox{$\Gamma \vdash b : BT \hspace{1em} |_{X} \hspace{.5em} C$} \\
+		                                 &                                                                      \\
+		\framebox{
+		\infer []
+		{\Gamma \vdash b : Uid                                                                                  \\ b_1 : ST \otimes T \in \Gamma}
+		{\Gamma \vdash \textbf{Bound } b  : Exp \otimes T \hspace{1em} | _{\varnothing}  \hspace{.5em} \left\{\right\}}
+		}
+		                                 & (\textsc{CT-Bound})                                                  \\
+		                                 &                                                                      \\
+		\framebox{
+		\infer []
+		{}
+		{\Gamma \vdash  \blacklozenge \; v  : Exp \otimes T \hspace{1em} | _{\varnothing}  \hspace{.5em} \left\{\right\}}
+		}
+		                                 & (\textsc{CT-Constant})                                               \\
+		                                 &                                                                      \\
+		\framebox{
+		\infer []
+		{}
+		{\Gamma \vdash  \blacklozenge \; v  : Pat \otimes T \hspace{1em} | _{\varnothing}  \hspace{.5em} \left\{\right\}}
+		}
+		                                 & (\textsc{CT-Pattern})                                                \\
+		                                 &                                                                      \\
+		\framebox{
+		\infer []
+		{\Gamma \vdash b_1 : Uid \otimes nothing
+		\\\\ \Gamma, b_2 : T_2 \vdash b_3 : Exp \otimes T_3 \hspace{1em} |_{X} \hspace{.5em} C}
+		{\Gamma \vdash \textbf{Function } b_1 \textbf{ Parameter } b_2
+		\\\\ \textbf{ Expression } b_3 : Exp \otimes T_2 \to T_3 \hspace{1em} |_{X} \hspace{.5em} C}
+		}
+		                                 & (\textsc{CT-DecFunc})                                                \\
+		                                 &                                                                      \\
+		\framebox{
+		\infer []
+		{\Gamma, b_1 : T_1 \vdash b_2 : Exp \otimes T_2 \hspace{1em} |_{X} \hspace{.5em} C}
+		{\Gamma \vdash \textbf{Lambda Parameter } b_1 \textbf{ Expression } b_2 : Exp \otimes T_1 \to T_2 \hspace{1em} |_{X} \hspace{.5em} C}
+		}
+		                                 & (\textsc{CT-Lambda})                                                 \\
+		                                 &                                                                      \\
+		\framebox{
+		\infer []
+		{\Gamma \vdash b_1 : Exp \otimes T_1 \hspace{1em} |_{X_1} \hspace{.5em} C_1                             \\ \Gamma \vdash b_2 : Exp \otimes T_2 \hspace{1em} |_{X_2} \hspace{.5em} C_2 \\\\
+		X_1 \cap X_2 = X_1 \cap FV(T_2) = X_2 \cap FV(T_1) = \varnothing                                        \\\\
+		T \notin X_1, X_2, T_1, T_2, C_1, C_2, \Gamma, b_1, or b_2                                              \\\\
+		C' = C_1 \cup C_2 \cup \left\{T_1 = T_2 \to T \right\}
+		}
+		{\Gamma \vdash \textbf{Application } b_1 \textbf{ Over } b_2 : Exp \otimes T \hspace{1em} |_{X_1 \cup X_2 \cup X} \hspace{.5em} C}
+		}
+		                                 & (\textsc{CT-App})                                                    \\
+		                                 &                                                                      \\
+		\framebox{
+		\infer []
+		{\Gamma \vdash b_1 : Exp \otimes T_1 \hspace{1em} |_{X_1} \hspace{.5em} C_1                             \\ \Gamma \vdash b_2 : Exp \otimes T_2 \hspace{1em} |_{X_2} \hspace{.5em} C_2 \\\\
+		\Gamma \vdash b_3 : Exp \otimes T_3 \hspace{1em} |_{X_3} \hspace{.5em} C_3                              \\\\
+		X_1, X_2, X_3 \; non \; overlapping                                                                     \\\\
+		C' = C_1 \cup C_2 \cup C_3 \cup \left\{T_1 = boolean, T_2 = T_3 \right\}}
+		{\Gamma \vdash \textbf{Condition When } b_1 \textbf{ Is true } b_2 \textbf{ Otherwise } b_3             \\\\ : Exp \otimes T_2 \hspace{1em} |_{X_1 \cup X_2 \cup X_3} \hspace{.5em} C'}
+		}
+		                                 & (\textsc{CT-Cond})                                                   \\
+		                                 &                                                                      \\
+		\framebox{
+		\infer []
+		{\Gamma \vdash b_1 : Exp \otimes T_1 \hspace{1em} |_{X_1} \hspace{.5em} C_1                             \\ \Gamma \vdash b_2 : Exp \otimes T2 \hspace{1em} |_{X_2} \hspace{.5em} C_2 \\\\
+		X_1, X_2 \; non \; overlapping                                                                          \\
+		C' = C_1 \cup C_2}
+		{\Gamma \vdash \textbf{Sequence of Exp-1 } b_1 \textbf{ Exp-2 } b_2 : Exp \otimes T_2 \hspace{1em} |_{X_1 \cup X_2} \hspace{.5em} C_1}
+		}
+		                                 & (\textsc{CT-Seq})
+	\end{tabular}
+	\myrule{right to reversed}{left to reversed}
+	\caption{Constraint typing rule}
+\end{figure}
+
+\begin{figure}
+	\myrule{left to reversed}{right to reversed}
+	\begin{tabular}[t]{l r}
+		\textbf{Constraint typing rules} & \framebox{$\Gamma \vdash b : BT \hspace{1em} |_{X} \hspace{.5em} C$} \\
+		                                 &                                                                      \\
+		\multicolumn{2}{r}{(\textsc{CT-PrimitiveBinaryOperator})}                                               \\
+		\framebox{\infer[]
+		{\Gamma \vdash  b_1: Exp \otimes T_1  \hspace{1em} |_{X_1} \hspace{.5em} C_1                            \\ \Gamma \vdash  b_2: Exp \otimes T_2  \hspace{1em} |_{X_2} \hspace{.5em} C_2 \\\\
+		C' = C_1 \cup C_2 \cup \left\{T_1 = T_2 = Primitive \; type \right\}}
+		{\Gamma \vdash \textbf{Terminal } b_1 \textbf{ operator } b_2 : Exp \otimes T  \hspace{1em} |_{X_1 \cup X_2} \hspace{.5em} C'}
+		}                                &                                                                      \\
+		                                 &                                                                      \\
+		\multicolumn{2}{r}{(\textsc{CT-PrimitiveUnaryOperator})}                                                \\
+		\framebox{\infer[]
+		{\Gamma \vdash  b_1: Exp \otimes T_1  \hspace{1em} |_{X_1} \hspace{.5em} C_1                            \\\\
+		C' = C_1 \cup \left\{T_1 = Primitive \; type \right\}}
+		{\Gamma \vdash \textbf{Terminal } b_1 : Exp \otimes T  \hspace{1em} |_{X_1} \hspace{.5em} C'}
+		}                                &                                                                      \\
+		                                 &                                                                      \\
+		\framebox{\infer[]
+		{\Gamma \vdash [b_1 \mapsto b_2] b_3 : Exp \otimes T_3   \hspace{1em} |_{X_1} \hspace{.5em} C_1         \\ \Gamma \vdash b_2 : Exp \otimes T_2  \hspace{1em} |_{X_2} \hspace{.5em} C_2 \\\\
+		X_1, X_2 \; non \; overlapping                                                                          \\
+		C' = C_1 \cup C_2}
+		{\Gamma \vdash \textbf{Let } b_1 = b_2 \textbf{ in } b_3 : Exp \otimes T_3 \hspace{1em} |_{X_1 \cup X_2} \hspace{.5em} C'}
+		}                                & (\textsc{CT-LetPoly})                                                \\
+		                                 &                                                                      \\
+		\framebox{\infer[]
+		{\textnormal{for each i}                                                                                \\ \Gamma \vdash b : Exp \otimes T_1 \hspace{1em} |_{X_1} \hspace{.5em} C_1 \\\\ \Gamma \vdash bc_i : Mtc \otimes T_{1i} \implies T_{2i} \hspace{1em} |_{X_{2i}} \hspace{.5em} C_{2i} \\\\
+		X_1, X_{2i} \; non \; overlapping                                                                       \\\\
+		C' = \bigcup C_{2i} \cup C_1  \cup \left\{T_1 = T_{1i}, T_2 = T_{2i}\right\}}
+		{\Gamma \vdash \textbf{Switch } b \left\{\textbf{Case-i } bc_i \; ^{i \in 1 \ldots n} \right\}: Exp \otimes T_2  \hspace{1em} |_{\bigcup X_{i}} \hspace{.5em} C'}
+		}                                & (\textsc{CT-CaseAnalysis})                                           \\
+		                                 &                                                                      \\
+		\framebox{\infer[]
+		{\textnormal{for each i}                                                                                \\ \Gamma \vdash  b_i: Exp \otimes T_i  \hspace{1em} |_{X_i} \hspace{.5em} C_i \\\\
+		C' = \bigcup C_i \cup \left\{ T = T_i \right\}}
+		{\Gamma \vdash \textbf{List constructor }                                                               \\\\ \left\{\textbf{Inhabitant-i } b_i \; ^{i \in 1 \ldots n}\right\}: Exp \otimes \textit{list of T}  \hspace{1em} |_{\bigcup X_i} \hspace{.5em} C'}
+		}                                & (\textsc{CT-ListCons})                                               \\
+		                                 &                                                                      \\
+		\framebox{\infer[]
+		{\Gamma \vdash  b_1: Exp \otimes T_1  \hspace{1em} |_{X_1} \hspace{.5em} C_1                            \\ \Gamma \vdash  b_2: Exp \otimes \textit{list of } T_2  \hspace{1em} |_{X_2} \hspace{.5em} C_2 \\\\
+		X_1, X_2 \; non \; overlapping                                                                          \\\\
+		C' = C_1 \cup C_2 \cup \left\{T_1 = T_2 \right\}}
+		{\Gamma \vdash \textbf{Append } b_1 \textbf{ to List } b_2 : Exp \otimes \textit{list of } T_1  \hspace{1em} |_{X_1 \cup X_2} \hspace{.5em} C'}
+		}                                & (\textsc{CT-ListAppend})                                             \\
+		                                 &                                                                      \\
+		\framebox{\infer[]
+		{\Gamma \vdash b : Exp \otimes \textit{list of } T_1   \hspace{1em} |_{X_1} \hspace{.5em} C_1           \\\\
+		C' = C_1 \cup \left\{T_1 = T\right\}}
+		{\Gamma \vdash \textbf{Head of List } b  : Exp \otimes T \hspace{1em} |_{X_1} \hspace{.5em} C'}
+		}                                & (\textsc{CT-ListHead})
+	\end{tabular}
+	\myrule{right to reversed}{left to reversed}
+	\caption{Constraint typing rule}
+\end{figure}
+
+\begin{figure}
+	\myrule{left to reversed}{right to reversed}
+	\begin{tabular}[t]{l r}
+		\textbf{Constraint typing rules} & \framebox{$\Gamma \vdash b : BT \hspace{1em} |_{X} \hspace{.5em} C$}                             \\
+		                                 &                                                                                                  \\
+		\framebox{\infer[]
+		{\Gamma \vdash b : Exp \otimes \textit{list of } T_1   \hspace{1em} |_{X_1} \hspace{.5em} C_1                                       \\\\
+		C' = C_1 \cup \left\{T_1 = T\right\}}
+		{\Gamma \vdash \textbf{Tail of List } b  : Exp \otimes \textit{list of } T \hspace{1em} |_{X_1} \hspace{.5em} C'}
+		}                                & (\textsc{CT-ListTail})                                                                           \\
+		                                 &                                                                                                  \\
+		\framebox{\infer[]
+		{\Gamma \vdash b : Exp \otimes T \hspace{1em} |_{X} \hspace{.5em} C                                                                 \\\\
+		C' = C \cup \left\{T = \textit{list of } X\right\}}
+		{\Gamma \vdash \textbf{Is empty } b : Exp \otimes boolean \hspace{1em} | _{X} \hspace{.5em} C'}
+		}                                & (\textsc{CT-ListIsEmpty})                                                                        \\
+		                                 &                                                                                                  \\
+		\framebox{\infer[]
+		{\textnormal{for each i}                                                                                                            \\ \Gamma \vdash  b_i: Exp \otimes T_i \hspace{1em} |_{X_i} \hspace{.5em} C_i \\\\ X_i \; non \; overlapping \\
+		C' = \bigcup C_i}
+		{\Gamma \vdash \textbf{Tuple constructor }                                                                                          \\\\ \left\{\textbf{Inhabitant-i } b_i \; ^{i \in 1 \ldots n}\right\} : Exp \otimes \textbf{tuple of } \left\{T_i \; ^{i \in 1 \ldots n}\right\} \hspace{1em} | _{\bigcup X_i} \hspace{.5em} C'}
+		}                                & (\textsc{CT-Tuple})                                                                              \\
+		                                 &                                                                                                  \\
+		\framebox{\infer[]
+		{\textnormal{for each i}                                                                                                            \\ \Gamma \vdash b : Exp \otimes \textbf{tuple of } \left\{T_i \; ^{i \in 1 \ldots m}\right\} \hspace{1em} |_{X_i} \hspace{.5em} C_i \\\\
+		C' = C_{i = n} \cup \left\{T_{i = n} = T \right\}}
+		{\Gamma \vdash \textbf{Get Item- } n \textbf{ from Tuple } b : Exp \otimes T \hspace{1em} | _{X_{i = n}} \hspace{.5em} C'}
+		}                                & (\textsc{CT-TupleProj})                                                                          \\
+		                                 &                                                                                                  \\
+		\framebox{\infer[]
+		{\textnormal{for each i}                                                                                                            \\ \Gamma \vdash  b_i: Field \otimes T_i  \hspace{1em} |_{X_i} \hspace{.5em} C_i \\\\ X_i \; non \; overlapping \\
+		C' = \bigcup C_i}
+		{\Gamma \vdash \textbf{Record constructor }                                                                                         \\\\ \left\{\textbf{Field-i } b_i \; ^{i \in 1 \ldots n}\right\} : Exp \otimes \textbf{record of } \left\{T_i \; ^{i \in 1 \ldots n}\right\} \hspace{1em} | _{\bigcup X_i} \hspace{.5em} C'}
+		}                                & (\textsc{CT-Record})                                                                             \\
+		                                 &                                                                                                  \\
+		\framebox{\infer[]
+		{\Gamma \vdash b : Exp \otimes \textbf{record of } \left\{T_i \; ^{i \in 1 \ldots m}\right\} \hspace{1em} |_{X_i} \hspace{.5em} C_i \\\\
+		C' = C_{i = n} \cup \left\{T_{i = n} = T \right\}}
+		{\Gamma \vdash \textbf{Get field- } n \textbf{ from Record } b : Exp \otimes T  \hspace{1em} | _{X_{i = n}} \hspace{.5em} C'}
+		}                                & (\textsc{CT-RecordProj})                                                                         \\
+	\end{tabular}
+	\myrule{right to reversed}{left to reversed}
+	\caption{Constraint typing rule}
+\end{figure}
+%% End Constraint typing rule
+
+\end{document}
+\endinput
+%%
+%% End of file `sample-acmsmall.tex'.
